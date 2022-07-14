@@ -2,7 +2,7 @@
    identification information */
 /*
 ID: xiezhao2
-TASK:dualpal
+TASK: crypt1
 LANG: C++
 */
 /* LANG can be C++11 or C++14 for those more recent releases */
@@ -11,43 +11,93 @@ LANG: C++
 #include <algorithm>
 #include <map>
 using namespace std;
-typedef long long ll;
-int const maxn = 303;
-int n, s;
-int ans = 0;
-string e = {"0123456789ABCDEFGHIJK"};
-bool change(int x, int b)
-{
-    int k = 0;
-    string p;
-    while (x)
-    {
-        p[k++] = e[x % b];
-        x /= b;
-    }
-    for (int i = 0; i < k; ++i)
-    {
-        if (p[i] != p[k - 1 - i])
-            return false;
-    }
-    return true;
-}
+int const maxn = 22;
+int n;
+int s[maxn];
+int l[maxn];
 int main()
 {
-    freopen("dualpal.out", "w", stdout);
-    freopen("dualpal.in", "r", stdin);
-    scanf("%d%d", &n, &s);
-    int ans = 0;
-    for (int i = s + 1; ans < n; ++i)
+    freopen("crypt1.out", "w", stdout);
+    freopen("crypt1.in", "r", stdin);
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i)
     {
-        int res = 0;
-        for (int j = 2; j <= 10; ++j)
-            res += change(i, j);
-        if (res >= 2)
+        scanf("%d", &s[i]);
+        l[s[i]] = true;
+    }
+    int a, b, c, d, e, f, g, h, ans = 0;
+    for (int i1 = 1; i1 <= n; ++i1)
+    {
+        a = s[i1];
+        if (a == 0)
+            continue;
+        for (int i2 = 1; i2 <= n; ++i2)
         {
-            printf("%d\n", i);
-            ans++;
+            b = s[i2];
+            for (int i3 = 1; i3 <= n; ++i3)
+            {
+                c = s[i3];
+                for (int i4 = 1; i4 <= n; ++i4)
+                {
+                    d = s[i4];
+                    if (d == 0)
+                        continue;
+                    int g = d * c + d * b * 10 + d * a * 100;
+                    if (g > 999)
+                        continue;
+                    for (int i5 = 1; i5 <= n; ++i5)
+                    {
+                        e = s[i5];
+                        int f = e * c + e * b * 10 + e * a * 100;
+                        if (f > 999)
+                            continue;
+                        h = f + g * 10;
+                        int o;
+                        if (h > 9999)
+                            continue;
+                        bool flag = false;
+                        o = f;
+                        while (o)
+                        {
+                            if (!l[o % 10])
+                            {
+                                flag = true;
+                                break;
+                            }
+                            o /= 10;
+                        }
+                        if (flag)
+                            continue;
+                        o = g;
+                        while (o)
+                        {
+                            if (!l[o % 10])
+                            {
+                                flag = true;
+                                break;
+                            }
+                            o /= 10;
+                        }
+                        if (flag)
+                            continue;
+                        o = h;
+                        while (o)
+                        {
+                            if (!l[o % 10])
+                            {
+                                flag = true;
+                                break;
+                            }
+                            o /= 10;
+                        }
+                        if (flag)
+                            continue;
+                        ans++;
+                    }
+                }
+            }
         }
     }
+    printf("%d\n", ans);
     return 0;
 }
