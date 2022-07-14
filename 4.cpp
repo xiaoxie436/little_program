@@ -2,102 +2,63 @@
    identification information */
 /*
 ID: xiezhao2
-TASK: crypt1
+TASK: combo
 LANG: C++
 */
 /* LANG can be C++11 or C++14 for those more recent releases */
 #include <iostream>
-#include <cstring>
 #include <algorithm>
-#include <map>
 using namespace std;
-int const maxn = 22;
+int const maxn = 4;
 int n;
-int s[maxn];
-int l[maxn];
-int main()
+int s[3][4];
+int ans;
+int ab(int x, int y)
 {
-    freopen("crypt1.out", "w", stdout);
-    freopen("crypt1.in", "r", stdin);
-    scanf("%d", &n);
+    if (x > y)
+    {
+        int t = x;
+        x = y;
+        y = t;
+    }
+    return min(y - x, n + x - y);
+}
+bool fc(int x, int y)
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        if (ab(s[x][i], s[y][i]) > 2)
+            return false;
+    }
+    return true;
+}
+bool check()
+{
+    if (fc(0, 2) or fc(1, 2))
+        return true;
+    return false;
+}
+void dfs(int t)
+{
+    if (t == 3)
+    {
+        if (check())
+            ans++;
+        return;
+    }
     for (int i = 1; i <= n; ++i)
     {
-        scanf("%d", &s[i]);
-        l[s[i]] = true;
+        s[2][t] = i;
+        dfs(t + 1);
     }
-    int a, b, c, d, e, f, g, h, ans = 0;
-    for (int i1 = 1; i1 <= n; ++i1)
-    {
-        a = s[i1];
-        if (a == 0)
-            continue;
-        for (int i2 = 1; i2 <= n; ++i2)
-        {
-            b = s[i2];
-            for (int i3 = 1; i3 <= n; ++i3)
-            {
-                c = s[i3];
-                for (int i4 = 1; i4 <= n; ++i4)
-                {
-                    d = s[i4];
-                    if (d == 0)
-                        continue;
-                    int g = d * c + d * b * 10 + d * a * 100;
-                    if (g > 999)
-                        continue;
-                    for (int i5 = 1; i5 <= n; ++i5)
-                    {
-                        e = s[i5];
-                        int f = e * c + e * b * 10 + e * a * 100;
-                        if (f > 999)
-                            continue;
-                        h = f + g * 10;
-                        int o;
-                        if (h > 9999)
-                            continue;
-                        bool flag = false;
-                        o = f;
-                        while (o)
-                        {
-                            if (!l[o % 10])
-                            {
-                                flag = true;
-                                break;
-                            }
-                            o /= 10;
-                        }
-                        if (flag)
-                            continue;
-                        o = g;
-                        while (o)
-                        {
-                            if (!l[o % 10])
-                            {
-                                flag = true;
-                                break;
-                            }
-                            o /= 10;
-                        }
-                        if (flag)
-                            continue;
-                        o = h;
-                        while (o)
-                        {
-                            if (!l[o % 10])
-                            {
-                                flag = true;
-                                break;
-                            }
-                            o /= 10;
-                        }
-                        if (flag)
-                            continue;
-                        ans++;
-                    }
-                }
-            }
-        }
-    }
+}
+int main()
+{
+    freopen("combo.out", "w", stdout);
+    freopen("combo.in", "r", stdin);
+    scanf("%d", &n);
+    scanf("%d%d%d%d%d%d", &s[0][0], &s[0][1], &s[0][2], &s[1][0], &s[1][1], &s[1][2]);
+    dfs(0);
     printf("%d\n", ans);
     return 0;
 }
