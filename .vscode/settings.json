@@ -1,0 +1,21 @@
+{
+  "files.associations": {
+    "algorithm": "cpp",
+    "utility": "cpp",
+    "cstdio": "cpp",
+    "iostream": "cpp",
+    "atomic": "cpp",
+    "*.tcc": "cpp",
+    "deque": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "vector": "cpp",
+    "fstream": "cpp",
+    "limits": "cpp",
+    "sstream": "cpp",
+    "system_error": "cpp"
+  }
+}

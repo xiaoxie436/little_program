@@ -107,6 +107,7 @@ int main()
         scanf("%lld%lld%lld", &opt, &l, &r);
         if (opt == 1)
         {
+
             scanf("%lld", &k);
             mul(rt, 1, n);
         }
